@@ -2,6 +2,8 @@
 from odoo import models, fields, api
 
 
+
+
 class action_SO_line(models.Model):
     _inherit = 'mrp.production'
 

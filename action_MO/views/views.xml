@@ -1,5 +1,6 @@
 <odoo>
     <data>
+
         <record id="view_mrp_fodrm_production_info_form" model="ir.ui.view">
             <field name="name">videw.mrp_production.form</field>
             <field name="model">mrp.production</field>

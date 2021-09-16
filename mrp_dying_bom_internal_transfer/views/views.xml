@@ -1,0 +1,18 @@
+<odoo>
+  <data>
+      <record id="production_bom_line_transfer_button" model="ir.ui.view">
+          <field name="name">production.bom.transfer.button</field> 
+          <field name="model">mrp.production</field>
+          <field name="inherit_id" ref="mrp.mrp_production_form_view"/>
+          <field name="arch" type="xml">
+              <xpath expr="//button[@name='action_cancel']" position="after">
+                  <field name="dying_mo" invisible='1'/>
+                <button name="create_receive_bom_lines" type="object" string="Internal Transfer" class="oe_highlight" attrs="{'invisible': [('dying_mo', '=', False)]}"/>
+              </xpath>
+              <xpath expr="//field[@name='name']" position="after">
+                  <field name="dying_mo" />
+              </xpath>
+          </field>
+      </record>
+  </data>
+</odoo>

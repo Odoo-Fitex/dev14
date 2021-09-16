@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+<!--    <record id="mrp_production_form_view_inherit_extended" model="ir.ui.view">-->
+<!--        <field name="name">mrp.production.form.inherit.extended</field>-->
+<!--        <field name="model">mrp.production</field>-->
+<!--        <field name="inherit_id" ref="mrp.mrp_production_form_view"/>-->
+<!--        <field name="arch" type="xml">-->
+<!--            <xpath expr="//button[@name='button_plan']" position="attributes">-->
+<!--                <attribute name="invisible">1</attribute>-->
+<!--            </xpath>-->
+<!--            <xpath expr="//field[@name='bom_id']" position="before">-->
+<!--                <field name="partial_qty" invisible="1"/>-->
+<!--            </xpath>-->
+<!--            <xpath expr="//button[@name='open_produce_product'][1]" position="attributes">-->
+<!--                <attribute name="invisible">1</attribute>-->
+<!--            </xpath>-->
+<!--            <xpath expr="//button[@name='open_produce_product'][2]" position="attributes">-->
+<!--                <attribute name="invisible">1</attribute>-->
+<!--            </xpath>-->
+
+
+
+<!--            <xpath expr="//button[@name='post_inventory']" position="replace">-->
+<!--                <button name="post_inventory" string="Post Inventory" type="object" attrs="{'invisible': [('post_visible', '=', False)]}" />-->
+<!--            </xpath>-->
+<!--            -->
+<!--        </field>-->
+<!--    </record>-->
+
+</odoo>

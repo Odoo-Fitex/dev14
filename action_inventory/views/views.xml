@@ -1,0 +1,189 @@
+<odoo>
+  <data>
+    
+  <record id="view_stock_form_rollnumber" model="ir.ui.view">
+        <field name="name">view.stock.form</field>
+        <field name="model">stock.production.lot</field>
+        <field name="inherit_id" ref="stock.view_production_lot_form"/>
+        <field name="arch" type="xml">
+        	<xpath expr="//field[@name='ref']" position="after">
+                    <field name="roll_number"/>
+                    <field name="notes"/>
+        </xpath>
+        </field>
+    </record>
+  
+<record id="view_stock_tree_rollnumber" model="ir.ui.view">
+        <field name="name">view.stock.tree</field>
+        <field name="model">stock.production.lot</field>
+        <field name="inherit_id" ref="stock.view_production_lot_tree"/>
+        <field name="arch" type="xml">
+        	<xpath expr="//field[@name='ref']" position="after">
+                 <field name="roll_number"/>
+        </xpath>
+        </field>
+    </record>
+  
+  <record id="view_stock_picking_rollnumber2" model="ir.ui.view">
+        <field name="name">view.stock.picking.rollnumber</field>
+        <field name="model">stock.inventory.line</field>
+        <field name="inherit_id" ref="stock.stock_inventory_line_tree"/>
+        <field name="arch" type="xml">
+        	<xpath expr="//field[@name='prod_lot_id']" position="after">
+                 <field name="roll_number2"/>
+        </xpath>
+        </field>
+    </record>
+
+  <record id="view_stock_quant_rollnumber3" model="ir.ui.view">
+        <field name="name">view.stock.quant.rollnumber</field>
+        <field name="model">stock.quant</field>
+        <field name="inherit_id" ref="stock.view_stock_quant_tree_editable"/>
+        <field name="arch" type="xml">
+        	<xpath expr="//field[@name='lot_id']" position="after">
+                 <field name="roll_number3" groups="stock.group_stock_user"/>
+        </xpath>
+        </field>
+    </record>
+  
+    <record id="view_stock_scrap_added_fields" model="ir.ui.view">
+        <field name="name">view.stock.scrap.fields</field>
+        <field name="model">stock.scrap</field>
+        <field name="inherit_id" ref="stock.stock_scrap_form_view"/>
+        <field name="arch" type="xml">
+        	<xpath expr="//form/sheet/group/group/field[@name='product_id']" position="after">
+            <field name="scrap_lable"/>        
+            <field name="scrap_type"/>
+            <field name="scrap_reason"/>
+            <field name="MO"/>
+            <field name="worker"/>
+            <field name="notes"/>
+        </xpath>
+        </field>
+    </record>
+    
+     <record id="view_stock_scrap_lot_in_tree" model="ir.ui.view">
+        <field name="name">view.stock.scrap.lot</field>
+        <field name="model">stock.scrap</field>
+        <field name="inherit_id" ref="stock.stock_scrap_tree_view"/>
+        <field name="arch" type="xml">
+        	<xpath expr="//field[@name='location_id']" position="after">
+            <field name="lot_id"/>        
+        </xpath>
+        </field>
+    </record>
+<record id="view_inventory_minus_report" model="ir.ui.view">
+        <field name="name">view.inventory.minus.report</field>
+        <field name="model">stock.quant</field>
+        <field name="inherit_id" ref="stock.quant_search_view"/>
+        <field name="arch" type="xml">
+         <xpath expr="//filter[@name='on_hand']" position="after">
+            <filter name="Negative Stock" string="Negative Stock"  domain="[('quantity', '&lt;', 0.0),'|',('location_id.usage','=', 'internal'),('location_id.usage' ,'=', 'transit')]"/>
+        </xpath>
+        </field>
+    </record>
+  
+     <record id="action_inventory_minus_report" model="ir.actions.act_window">
+            <field name="name">Minus Quantities</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">stock.quant</field>
+            <field name="view_mode">tree,pivot,graph</field>
+            <field name="search_view_id" ref="stock.quant_search_view"/>    
+            <field name="context">{"search_default_Negative Stock": 1}</field>
+        </record>
+    
+     <menuitem
+            name="Minus Quantities"
+            id="menu_action_Minus_Quantities"
+            action="action_inventory_minus_report"
+            parent="stock.menu_warehouse_report"
+            sequence="5"/>
+    
+    
+    <record id="view_stock_tree_quantity_lot" model="ir.ui.view">
+        <field name="name">view.stock.lot.tree</field>
+        <field name="model">stock.production.lot</field>
+        <field name="inherit_id" ref="stock.view_production_lot_tree"/>
+        <field name="arch" type="xml">
+        	<xpath expr="//field[@name='ref']" position="after">
+                 <field name="product_qty"/>
+        </xpath>
+        </field>
+    </record>
+    
+    
+     <record id="view_stock_WH_checkavalaiblity_remove" model="ir.ui.view">
+        <field name="name">view.stock.checkavailablity.remove.form</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form"/>
+        <field name="arch" type="xml">
+        	<xpath expr="//button[@name='action_assign']" position="attributes">
+                    <attribute name="groups">mrp.group_mrp_manager</attribute>
+        </xpath>
+        </field>
+    </record>
+  
+    <record id="view_stock_sales_order" model="ir.ui.view">
+        <field name="name">view.stock.sales.order</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form"/>
+        <field name="arch" type="xml">
+          
+        	<xpath expr="//field[@name='origin']" position="after">
+                 <field name="sales" attrs="{'invisible': [('sales', '=', False)]}"/>
+                 <field name="purchase" attrs="{'invisible': [('purchase', '=', False)]}"/>
+        </xpath>
+          
+          <xpath expr="//field[@name='origin']" position="attributes">
+                <attribute name="attrs">{'invisible': ['|',('purchase', '!=', False),('sales', '!=', False)]}</attribute>
+        </xpath>
+          
+          <xpath expr="//field[@name='location_dest_id']" position="after">
+              <field name="connected" groups="mrp.group_mrp_manager"/>     
+          </xpath>
+          
+        </field>
+    </record>
+        <record id="view_stock_filters" model="ir.ui.view">
+        <field name="name">view.stock.filters</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_internal_search"/>
+        <field name="arch" type="xml">
+
+          <xpath expr="//filter[@name='picking_type']" position="after">
+                <filter string="التاريخ" name="date_done" domain="[]" context="{'group_by': 'date_done'}"/>
+        </xpath>
+         
+        </field>
+    </record>
+        <record id="view_stock_date_in_tree" model="ir.ui.view">
+        <field name="name">view.stock.date.tree</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.vpicktree"/>
+        <field name="arch" type="xml">
+
+          <xpath expr="//field[@name='partner_id']" position="after">
+                <field name="date_done" string="التاريخ"/>
+        </xpath>
+          
+        </field>
+    </record>
+      <record id="view_stock_reporting_filters" model="ir.ui.view">
+        <field name="name">view.stock.reporting.filters</field>
+        <field name="model">stock.quant</field>
+        <field name="inherit_id" ref="stock.quant_search_view"/>
+        <field name="arch" type="xml">
+
+          <xpath expr="//group/filter[@name='on_hand']" position="after">
+               <filter name="yarn" string="غزل" domain="[('location_id', '=', 'WH/غزل')]"/>
+               <filter name="yarn" string=" قماش مصبوغ" domain="[('location_id', '=', 'WH/قماش مصبوغ')]"/>
+               <filter name="yarn" string="قماش خام" domain="[('location_id', '=', 'WH/قماش خام')]"/>
+               <filter name="yarn" string="صالة الإنتاج" domain="[('location_id', '=', 'WH/صالة انتاج')]"/>
+        </xpath>
+          
+        </field>
+    </record>
+
+  
+   </data>
+</odoo>

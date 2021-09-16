@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+<!--    <record id="mrp_production_workorder_form_view_inherit_extended" model="ir.ui.view">-->
+<!--        <field name="name">mrp.workorder.form.inherit.extended</field>-->
+<!--        <field name="model">mrp.workorder</field>-->
+<!--        <field name="inherit_id" ref="mrp.mrp_production_workorder_form_view_inherit"/>-->
+<!--        <field name="arch" type="xml">-->
+<!--            <xpath expr="//field[@name='qty_production']" position="before">-->
+<!--                <field name="qty_production_wo"/>-->
+<!--            </xpath>-->
+<!--            <xpath expr="//field[@name='qty_production']" position="attributes">-->
+<!--                <attribute name="invisible">1</attribute>-->
+<!--            </xpath>-->
+<!--        </field>-->
+<!--    </record>-->
+
+<!--    <record id="mrp_production_workorder_tree_view_inherit_extended" model="ir.ui.view">-->
+<!--        <field name="name">mrp.workorder.tree.inherit</field>-->
+<!--        <field name="model">mrp.workorder</field>-->
+<!--        <field name="inherit_id" ref="mrp.mrp_production_workorder_tree_view_inherit"/>-->
+<!--        <field name="arch" type="xml">-->
+<!--            <xpath expr="//field[@name='qty_production']" position="before">-->
+<!--                <field name="qty_production_wo" string="Original Production Quantity"/>-->
+<!--            </xpath>-->
+<!--            <xpath expr="//field[@name='qty_production']" position="attributes">-->
+<!--                <attribute name="invisible">1</attribute>-->
+<!--            </xpath>-->
+<!--        </field>-->
+<!--    </record>-->
+
+</odoo>

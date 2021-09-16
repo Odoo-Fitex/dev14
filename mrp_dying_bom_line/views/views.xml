@@ -1,0 +1,221 @@
+<odoo>
+    <data>
+        <!-- Inherit Form View to Modify it -->
+        <record id="mrp_productionh_add_group" model="ir.ui.view">
+            <field name="name">mrp.produchtionadd.group</field>
+            <field name="model">mrp.production</field>
+            <field name="inherit_id" ref="action_MO.view_mrp_fodrm_production_info_form"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//group[@name='quantity']" position="after">
+                    <!-- Add your fields or attributes here -->
+                    <group name="batch_weight" string="Batch Weight">
+                        <field name="is_batch"/>
+                        <field name="batch_weight"/>
+                        <field name="mo_weight"/>
+                    </group>
+                </xpath>
+
+            </field>
+        </record>
+
+        <!-- Inherit Form View to Modify it -->
+        <record id="id_stock_picking_kadd_fields" model="ir.ui.view">
+            <field name="name">stock.piclking.add.fields</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_form"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='name']" position="after">
+                    <!-- Add your fields or attributes here -->
+                    <field name="mrp_production_id" invisible="1"/>
+                </xpath>
+
+            </field>
+        </record>
+        <record id="order_move_line_picking_list_form_id" model="ir.ui.view">
+            <field name="name">order.line.pickking.list.form.id</field>
+            <field name="model">stock.move.line</field>
+            <field name="inherit_id" ref="stock.view_stock_move_line_detailed_operation_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='product_id']" position="before">
+                    <field name="sequence" widget="handle"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="production_dlying_color_bom_tab" model="ir.ui.view">
+            <field name="name">prodluction.dying.color.bom.tab</field>
+            <field name="model">mrp.production</field>
+            <field name="inherit_id" ref="mrp.mrp_production_form_view"/>
+            <field name="arch" type="xml">
+                <div name="button_box" position="inside">
+                    <button name="get_transfer"
+                            type="object"
+                            string="Transfers"
+                            class="oe_stat_button"
+                            icon="fa-archive">
+                        <!--                        <field name="active" widget="boolean_button" options='{"terminology": "archive"}'/>-->
+                    </button>
+                </div>
+                <xpath expr="//page[1]/field[@name='move_raw_ids']" position="replace">
+                    <!-- Add your fields or attributes here -->
+                    <field name="move_raw_ids"
+                           context="{'final_lots': show_final_lots, 'tree_view_ref': 'mrp.view_stock_move_raw_tree', 'form_view_ref': 'mrp.view_stock_move_lots', 'default_location_id': location_src_id, 'default_location_dest_id': production_location_id, 'default_state': 'draft', 'default_raw_material_production_id': id, 'default_picking_type_id': picking_type_id}"
+                           readonly="0"/>
+                </xpath>
+                <xpath expr="//field[@name='user_id']" position="after">
+                    <field name="dying_mo" invisible='1'/>
+                </xpath>
+                <xpath expr="//notebook/page[last()]" position="after">
+                    <page string="Auxiliary" attrs="{'invisible': [('dying_mo', '=', False)]}">
+
+                        <group>
+                            <group>
+                                <field name="chemical_bom_id" domain="[('material_type','=',('chemicals'))]"/>
+                            </group>
+                            <group>
+                                <field name="liqur_ratio_2"/>
+                                <button name="compute_color_bom_line_quantity_chemicals" string="Compute" type="object"
+                                        class="oe_highlight"/>
+                                <button name="send_money_chemicals" string="Send Lines" type="object"
+                                        class="oe_highlight"/>
+                            </group>
+                        </group>
+                        <field name="chemical_production_bom_line_ids">
+                            <tree string="Lines" editable="bottom" create="0">
+                                <field name="product_id"/>
+                                <field name="barcode"/>
+                                <field name="percentage"/>
+                                <field name="qty_weight"/>
+                                <field name="percentage_weight"/>
+                                <field name="product_qty"/>
+                                <field name="product_uom_id"/>
+                                <field name="original_bom_line_id" invisible="1"/>
+
+                            </tree>
+                        </field>
+                    </page>
+                    <page string="Color" attrs="{'invisible': [('dying_mo', '=', False)]}">
+
+                        <group>
+                            <group>
+                                <field name="color_bom_id" domain="[('material_type','=',('dyed'))]"/>
+
+                            </group>
+                            <group>
+                                <!--     <field name="liqur_ratio"/> -->
+                                <button name="compute_color_bom_line_quantity" string="Compute" type="object"
+                                        class="oe_highlight"/>
+                                <button name="send_money_bom_line" string="Send Lines" type="object"
+                                        class="oe_highlight"/>
+                            </group>
+                        </group>
+                        <field name="production_bom_line_ids">
+                            <tree string="Lines" editable="bottom" create="0">
+                                <field name="product_id"/>
+                                <field name="barcode"/>
+                                <field name="percentage"/>
+                                <field name="qty_weight"/>
+                                <field name="percentage_weight"/>
+                                <field name="product_qty"/>
+                                <field name="product_uom_id"/>
+                                <field name="original_bom_line_id" invisible="1"/>
+
+                            </tree>
+                        </field>
+                    </page>
+                    <page name="finishing" string="Finishing" attrs="{'invisible': [('dying_mo', '=', False)]}">
+
+                        <group>
+                            <group>
+                                <field name="finish_bom_id" domain="[('material_type','=',('finishing'))]"/>
+                            </group>
+                            <group>
+                                <field name="liqur_ratio_3"/>
+                                <button name="compute_color_bom_line_quantity_finish" string="Compute" type="object"
+                                        class="oe_highlight"/>
+                                <button name="send_money_finish" string="Send Lines" type="object"
+                                        class="oe_highlight"/>
+                            </group>
+                        </group>
+                        <field name="finish_production_bom_line_ids">
+                            <tree string="Line line" editable="bottom" create="0">
+                                <field name="product_id"/>
+                                <field name="barcode"/>
+                                <field name="percentage"/>
+                                <field name="product_qty"/>
+                                <field name="product_uom_id"/>
+                                <field name="original_bom_line_id" invisible="1"/>
+                            </tree>
+                        </field>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="production_dying_spcecifications_tab" model="ir.ui.view">
+            <field name="name">production.dying.spcecifications.tab</field>
+            <field name="model">mrp.production</field>
+            <field name="inherit_id" ref="mrp.mrp_production_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//page[@name='components']/field[@name='move_raw_ids']" position="replace">
+                    <!-- Add your fields or attributes here -->
+                    <field name="move_raw_ids"
+                           context="{'final_lots': show_final_lots, 'tree_view_ref': 'mrp.view_stock_move_raw_tree', 'form_view_ref': 'mrp.view_stock_move_lots', 'default_location_id': location_src_id, 'default_location_dest_id': production_location_id, 'default_state': 'draft', 'default_raw_material_production_id': id, 'default_picking_type_id': picking_type_id}"
+                           readonly="0"/>
+                </xpath>
+                <xpath expr="//notebook/page[@name='components']" position="before">
+                    <page string="Specifications" attrs="{'invisible': [('dying_mo', '=', False)]}">
+                        <group>
+                            <group string="Greige Fabric Specification">
+                                <field name="grey_weight"
+                                       attrs="{'required': [('dying_mo', '=', True)], 'invisible': [('dying_mo', '=', False)]}"/>
+                                <field name="grey_width"
+                                       attrs="{'required': [('dying_mo', '=', True)], 'invisible': [('dying_mo', '=', False)]}"/>
+                            </group>
+                            <group string="Dying Specification">
+                                <group string="Pretreatment">
+                                    <field name="oil_removing"
+                                           attrs="{'required': [('dying_mo', '=', True)], 'invisible': [('dying_mo', '=', False)]}"/>
+                                    <field name="enzyme"
+                                           attrs="{'required': [('dying_mo', '=', True)], 'invisible': [('dying_mo', '=', False)]}"/>
+                                </group>
+                                <group string="Mechanical Treatment">
+                                    <field name="raising"
+                                           attrs="{'required': [('dying_mo', '=', True)], 'invisible': [('dying_mo', '=', False)]}"/>
+                                    <field name="carbon"
+                                           attrs="{'required': [('dying_mo', '=', True)], 'invisible': [('dying_mo', '=', False)]}"/>
+                                </group>
+                                <group string="Finishing Treatment">
+                                    <field name="gluing"
+                                           attrs="{'required': [('dying_mo', '=', True)], 'invisible': [('dying_mo', '=', False)]}"/>
+                                    <field name="cutting_selvadge"
+                                           attrs="{'required': [('dying_mo', '=', True)], 'invisible': [('dying_mo', '=', False)]}"/>
+                                    <field name="compactor"
+                                           attrs="{'required': [('dying_mo', '=', True)], 'invisible': [('dying_mo', '=', False)]}"/>
+                                </group>
+                            </group>
+                        </group>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="action_manufacturing_dyehouse_orders" model="ir.actions.act_window">
+            <field name="name">Dying Manufacturing Order</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">mrp.production</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="mrp.view_mrp_production_filter"/>
+            <field name="context">{"search_default_Dying Manufacturing Order": 1, "default_dying_mo": True}</field>
+        </record>
+
+        <menuitem
+                name="Dying Manufacturing Orders"
+                id="menu_action_Dying_Manufacturing_Order"
+                action="action_manufacturing_dyehouse_orders"
+                parent="mrp.menu_mrp_manufacturing"
+                sequence="5"/>
+    </data>
+</odoo>

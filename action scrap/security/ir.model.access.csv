@@ -1,0 +1,12 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_sale_raw_material_user,sale.raw.material,model_sale_raw_material,sales_team.group_sale_salesman,1,1,1,1
+access_sale_dying_user,sale.dying,model_sale_dying,sales_team.group_sale_salesman,1,1,1,1
+access_sale_knitting_user,sale.knitting,model_sale_knitting,sales_team.group_sale_salesman,1,1,1,1
+access_sale_yarn_user,sale.yarn,model_sale_yarn,sales_team.group_sale_salesman,1,1,1,1
+access_code_color_user,code.color,model_code_color,sales_team.group_sale_salesman,1,1,1,1
+
+access_casual_item_user,casual.item,model_casual_item,sales_team.group_sale_salesman,1,1,1,1
+access_casual_item_line_user,casual.item.line,model_casual_item_line,sales_team.group_sale_salesman,1,1,1,1
+access_casual_item_line_property_user,casual.item.line.property,model_casual_item_line_property,sales_team.group_sale_salesman,1,1,1,1
+
+access_casual_accessory_user,casual.accessory,model_casual_accessory,sales_team.group_sale_salesman,1,1,1,1

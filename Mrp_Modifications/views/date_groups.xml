@@ -1,0 +1,12 @@
+<odoo>
+    <data>
+      <record id="group_dying_user" model="res.groups">
+            <field name="name">Dying Group</field>
+      </record>
+
+      <record id="group_grey_user" model="res.groups">
+            <field name="name">Grey Group</field>
+      </record>
+
+    </data>
+</odoo>

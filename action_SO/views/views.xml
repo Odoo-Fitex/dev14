@@ -1,0 +1,225 @@
+<odoo>
+    <data>
+
+        <record id="view_stock_move_product_whout_total_amount" model="ir.ui.view">
+            <field name="name">view.WHout.form.total</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//notebook/page[3]" position="inside">
+                    <div>
+                        <group name="note_group" col="6">
+
+                            <group class="oe_subtotal_footer oe_right" name="inventory_total">
+                                <!--                                     <field name="total_rolls"/> -->
+                                <field name="total_quantity"/>
+                            </group>
+                        </group>
+                    </div>
+                </xpath>
+
+                <xpath expr="//notebook/page[2]" position="inside">
+                    <div>
+                        <group name="note_group" col="6">
+
+                            <group class="oe_subtotal_footer oe_right" name="inventory_total">
+                                <!--                                     <field name="total_rolls"/> -->
+                                <field name="total_quantity"/>
+                            </group>
+                        </group>
+                    </div>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_sales_form_delivery" model="ir.ui.view">
+            <field name="name">view.salesorder.form</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='partner_id']" position="after">
+                    <field name="delivery_distination"/>
+                    <field name="number_of_out"/>
+                    <field name="fabric_type" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                    <field name="done"/>
+                </xpath>
+                <!--       <xpath expr="//button[@name='action_confirm']" position="after">
+                        <button name="sales_Qoutation" string="Reset To Qoutation" type="object" states="sale"/>
+                          </xpath> -->
+            </field>
+        </record>
+
+        <record id="view_sales_crm_field_form" model="ir.ui.view">
+            <field name="name">view.sales.crm.field.form</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='payment_term_id']" position="after">
+                    <field name="opportunity_id" attrs="{'readonly': [('done', '=', 'True')]}"/>
+                </xpath>
+
+            </field>
+        </record>
+
+        <record id="view_sales_tree_view" model="ir.ui.view">
+            <field name="name">view.salesorder.form</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='partner_id']" position="after">
+                    <field name="fabric_type" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_qoutations_tree_view" model="ir.ui.view">
+            <field name="name">view.salesorder.form</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_quotation_tree_with_onboarding"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='partner_id']" position="after">
+                    <field name="fabric_type" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_sales_form_product_info" model="ir.ui.view">
+            <field name="name">view.salesorder.form</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//notebook/page/field[@name='order_line']/tree/field[@name='product_uom_qty']"
+                       position="before">
+                    <field name="barcode"/>
+                    <field name="weight"/>
+                    <field name="width"/>
+                    <field name="gouge"/>
+                    <field name="inch"/>
+                    <field name="attached"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="order_line_picking_list_form_in" model="ir.ui.view">
+            <field name="name">order.line.picking.list.form.out</field>
+            <field name="model">stock.move</field>
+            <field name="inherit_id" ref="stock.view_stock_move_nosuggest_operations"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='product_id']" position="after">
+                    <field name="boxes"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="order_move_line_picking_list_form_out" model="ir.ui.view">
+            <field name="name">order.line.picking.list.form.out</field>
+            <field name="model">stock.move.line</field>
+            <field name="inherit_id" ref="stock.view_stock_move_line_detailed_operation_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='product_id']" position="after">
+                    <field name="barcode2"/>
+                    <field name="color2"/>
+                    <field name="trade_name2"/>
+                    <field name="rolls_number2"/>
+                    <field name="notes2"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_stock_move_product_whout" model="ir.ui.view">
+            <field name="name">view.WHout.form</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//sheet/group/group/field[@name='origin']" position="after">
+                    <field name="number_of_out"/>
+                    <field name="driver" invisible="1"/>
+                    <field name="car_plate" invisible="1"/>
+                    <field name="delivered_by" invisible="1"/>
+                    <field name="delivered_to" invisible="1"/>
+                    <field name="dye_house_address"/>
+                    <field name="delivery_fee"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_sales_to_invoice_tree_view" model="ir.ui.view">
+            <field name="name">view.to.invoice.tree</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//tree/field[@name='user_id']" position="after">
+                    <field name="number_of_out"/>
+                </xpath>
+            </field>
+        </record>
+
+<!--        <record id="view_add_to_done_sales_order" model="ir.ui.view">-->
+<!--            <field name="name">view.add.to.done.sales</field>-->
+<!--            <field name="model">sale.order</field>-->
+<!--            <field name="inherit_id" ref="sale.sale_order_view_search_inherit_sale"/>-->
+<!--            <field name="arch" type="xml">-->
+<!--                <xpath expr="//filter[2]" position="after">-->
+<!--                    <filter string="Running Orders" name="Running Orders" domain="[('done', '=', False)]"></filter>-->
+<!--                </xpath>-->
+<!--            </field>-->
+<!--        </record>-->
+
+        <record id="action_running_orders" model="ir.actions.act_window">
+            <field name="name">Running Sales Orders</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">sale.order</field>
+            <field name="view_mode">tree,kanban,form,calendar,pivot,graph,activity</field>
+            <field name="search_view_id" ref="sale.sale_order_view_search_inherit_sale"/>
+            <field name="context">{"search_default_Running Orders": 1}</field>
+            <field name="domain">[('state', 'not in', ('draft', 'sent', 'cancel'))]</field>
+        </record>
+
+        <menuitem
+                name="Running Orders"
+                id="menu_action_running_orders"
+                action="action_running_orders"
+                parent="sale.sale_order_menu"
+                sequence="2"/>
+
+
+        <!--record id="view_stock_move_product_whout_total_amount" model="ir.ui.view">
+                <field name="name">view.WHout.form.total</field>
+                <field name="model">stock.picking</field>
+                <field name="inherit_id" ref="stock.view_picking_form"/>
+                <field name="arch" type="xml">
+                    <xpath expr="//notebook/page[3]" position="inside">
+                <div>
+                      <group name="note_group" col="6">
+
+                                            <group class="oe_subtotal_footer oe_right" name="inventory_total">
+                                            <field name="total_rolls"/>
+                                            <field name="total_quantity"/>
+                                 </group>
+                          </group>
+                </div>
+                    </xpath>
+                </field>
+            </record-->
+
+        <record id="view_crm_ssscaske_my_activities_filter" model="ir.ui.view">
+            <field name="name">crm.leassmd.search.myactivities</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm.view_crm_case_leads_filter"/>
+            <field name="arch" type="xml">
+                <!-- we should not override the whole field but instead just set invisible attribute
+                 to 0. but this approach is not working. the work around is temporary -->
+                <xpath expr="//filter[@name='activities_overdue']" position="replace">
+                    <filter string="Late Activities" name="activities_overdue"
+                        domain="[('my_activity_date_deadline', '&lt;', context_today().strftime('%Y-%m-%d'))]"
+                        help="Show all opportunities for which the next action date is before today"/>
+                </xpath>
+                <xpath expr="//field[@name='name']" position="after">
+                    <!-- Add your fields or attributes here -->
+                    <field name="my_activity_date_deadline"/>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

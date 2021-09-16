@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <template id="report_package_delivery_slip_WHOUT123" inherit_id="stock.report_delivery_document">
+        <xpath expr="//table/thead/tr/th[@name='th_sm_quantity']" position="after">
+            <th name="th_sm_lot_serial_number" width="30">
+                <strong>Lot/Serial Number</strong>
+            </th>
+            <!--th name="th_sm_color" width="50"><strong>Color</strong></th-->
+            <th name="th_sm_rollnumber" width="20">
+                <strong>Number Of Boxes</strong>
+            </th>
+            <th name="th_sm_notes" width="120">
+                <strong>Notes</strong>
+            </th>
+        </xpath>
+        <xpath expr="//div[@name='div_sched_date']" position="before">
+            <div class="col-auto" name="div_nmbr_of_paper">
+                <strong>Paper Number:</strong>
+                <p t-field="o.number_of_out"/>
+            </div>
+        </xpath>
+        <xpath expr="//table/thead/tr/th[@name='th_sm_product']" position="attributes">
+            width="50"
+        </xpath>
+
+        <xpath expr="//table[@name='stock_move_table']" position="inside">
+            <tfoot>
+                <tr height="200">
+                    <th name="th_sm_empty">
+                        <strong></strong>
+                    </th>
+                </tr>
+                <tr>
+                    <th name="th_sm_driver" width="200">
+                        <strong>Driver's Name</strong>
+                    </th>
+                    <th name="th_sml_driver_phone" width="80">
+                        <strong>Car Plate Number</strong>
+                    </th>
+                    <th name="th_sml_delivered_by" width="80">
+                        <strong>Delivered By</strong>
+                    </th>
+                    <th name="th_sml_delivered_to" width="80">
+                        <strong>Delivered To</strong>
+                    </th>
+                    <th name="th_sml_delivery_fee" width="80">
+                        <strong>Delivery Fee</strong>
+                    </th>
+                </tr>
+            </tfoot>
+        </xpath>
+
+        <xpath expr="//table/tbody/tr/td[1]" position="replace">
+            <td width="50">
+                <span t-field="move.trade_name"/>
+            </td>
+        </xpath>
+
+        <xpath expr="//table/tbody/tr/td[2]" position="after">
+
+            <td width="20">
+                <span t-field="move.lot_id"/>
+            </td>
+
+            <td width="20">
+                <span t-field="move.boxes"/>
+            </td>
+            <td width="100">
+                <span t-field="move.notes"/>
+            </td>
+
+        </xpath>
+
+        <!--        <xpath expr="//table[2]" position="replace">-->
+        <!--            <table class="table table-sm" t-if="o.state=='done'" name="stock_move_table_2">-->
+        <!--                <thead>-->
+        <!--                    <tr>-->
+        <!--                        <th name="th_sm_product" width="50">-->
+        <!--                            <strong>Product</strong>-->
+        <!--                        </th>-->
+        <!--                        <th name="th_sm_quantity" width="20">-->
+        <!--                            <strong>Quantity</strong>-->
+        <!--                        </th>-->
+        <!--                        <th name="th_sm_barcode" width="20">-->
+        <!--                            <strong>Lot/Serial Number</strong>-->
+        <!--                        </th>-->
+        <!--                        <th name="th_sm_rollnumber" width="30">-->
+        <!--                            <strong>Number Of Boxes</strong>-->
+        <!--                        </th>-->
+        <!--                        <th name="th_sm_notes" width="100">-->
+        <!--                            <strong>Notes</strong>-->
+        <!--                        </th>-->
+        <!--                    </tr>-->
+        <!--                </thead>-->
+        <!--                <tfoot>-->
+        <!--                    <tr height="200">-->
+        <!--                        <th name="th_sm_empty">-->
+        <!--                            <strong></strong>-->
+        <!--                        </th>-->
+        <!--                    </tr>-->
+        <!--                    <tr>-->
+        <!--                        <th name="th_sm_driver" width="100">-->
+        <!--                            <strong>Driver's Name</strong>-->
+        <!--                        </th>-->
+        <!--                        <th name="th_sml_driver_phone" width="100">-->
+        <!--                            <strong>Car Plate Number</strong>-->
+        <!--                        </th>-->
+        <!--                        <th name="th_sml_delivered_by" width="100">-->
+        <!--                            <strong>Delivered By</strong>-->
+        <!--                        </th>-->
+        <!--                        <th name="th_sml_delivered_to" width="100">-->
+        <!--                            <strong>Delivered To</strong>-->
+        <!--                        </th>-->
+        <!--                        <th name="th_sml_delivery_fee" width="100">-->
+        <!--                            <strong>Delivery Fee</strong>-->
+        <!--                        </th>-->
+        <!--                    </tr>-->
+
+
+        <!--                </tfoot>-->
+        <!--                <tbody>-->
+        <!--                    <t t-set="lines" t-value="o.move_lines.filtered(lambda x: x.product_uom_qty)"/>-->
+        <!--                    <tr t-foreach="lines" t-as="move">-->
+        <!--                        <td width="50">-->
+        <!--                            <span t-field="move.trade_name"/>-->
+        <!--                        </td>-->
+        <!--                        <td width="30">-->
+        <!--                            <span t-field="move.product_uom_qty"/>-->
+        <!--                            <span t-field="move.product_uom"/>-->
+        <!--                        </td>-->
+        <!--                        <td width="30">-->
+        <!--                            <span t-field="move.lot_id"/>-->
+        <!--                        </td>-->
+        <!--                        <td width="20">-->
+        <!--                            <span t-field="move.boxes"/>-->
+        <!--                        </td>-->
+        <!--                        <td width="100">-->
+        <!--                            <span t-field="move.notes"/>-->
+        <!--                        </td>-->
+        <!--                    </tr>-->
+        <!--                </tbody>-->
+        <!--            </table>-->
+        <!--        </xpath>-->
+
+        <xpath expr="//div[@name='div_sched_date']" position="after">
+            <div t-if="o.dye_house_address" class="col-auto" name="div_dye_house_address">
+                <strong>Dyehouse Address</strong>
+                <p t-field="o.dye_house_address"/>
+            </div>
+        </xpath>
+    </template>
+</odoo>

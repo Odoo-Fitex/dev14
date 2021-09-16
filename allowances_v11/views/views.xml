@@ -1,0 +1,49 @@
+<odoo>
+  <data>
+    <record id="allowences" model="ir.ui.view">
+            <field name="model">hr.contract</field>
+            <field name="inherit_id" ref="hr_contract.hr_contract_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//notebook/page[@name='information']" position="after">
+                    <page string="Allowances" name="allowence">
+                        <group>
+                            <label for="hra"/>
+                            <div class="o_row" name="houseallowance">
+                                <field name="hra" nolabel="1"/>
+                                <span>/ month</span>
+                            </div>
+                            <field name="tr_allowance"/>
+                            <field name="phone_allowance"/>
+                            <field name="meal_allowance"/>
+                            <field name="car_allowance"/>
+                            <field name="clothing_allowance"/>
+                        </group>
+                    </page>
+                </xpath>
+            </field>
+    </record>
+    <record id="allowences1" model="ir.ui.view">
+            <field name="model">hr.contract</field>
+            <field name="inherit_id" ref="hr_contract.hr_contract_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//notebook/page[@name='allowence']" position="after">
+                    <page string="Deduction" name="deduction">
+                        <group>
+                            <field name="social_insurance_per"/>
+                            <field name="social_insurance"/>
+                        </group>
+                    </page>
+                </xpath>
+            </field>
+    </record>
+      <record id="empoyee" model="ir.ui.view">
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='work_location']" position="after">
+                    <field name="code"/>
+                </xpath>
+            </field>
+    </record>
+  </data>
+</odoo>

@@ -1,0 +1,97 @@
+<?xml version="1.0"?>
+<odoo>
+<template id="report_package_operation_picking_WHOUT" inherit_id="stock.report_picking">
+          
+          
+          <xpath expr="//div[@class='row mt48 mb32']" position="after">
+                     <div class="col-auto" name="div_nmbr_of_paper">
+                                    <strong>Paper Number:</strong>
+                                    <p t-field="o.number_of_out"/>
+                                </div>
+          </xpath>
+
+
+          <xpath expr="//table[1]" position="replace">
+                            <table class="table table-sm" t-if="o.move_line_ids and o.move_ids_without_package">
+                                <t t-set="has_barcode" t-value="any([move_ids_without_package.product_id and move_ids_without_package.product_id.sudo().barcode or move_ids_without_package.package_id for move_ids_without_package in o.move_line_ids])"/>
+                                <t t-set="has_serial_number" t-value="o.move_line_ids.filtered(lambda ml: ml.lot_id or ml.lot_name)" groups="stock.group_production_lot"/>
+                                <thead>
+                                    <tr>
+                                        <th name="th_product" width="120">
+                                            <strong>Product</strong>
+                                        </th>
+                                        <th width="120">
+                                            <strong>Quantity</strong>
+                                        </th>
+                                        <th name="th_lot" width="120">
+                                            <strong>Lot/Serial Number</strong>
+                                        </th>
+                                        
+                                        <th name="th_number_of_boxes" width="80">
+                                           <strong>Number Of Rolls</strong>
+                                        </th>
+                                        <th name="th_barcode" width="120" class="text-center">
+                                            <strong>Product Barcode</strong>
+                                        </th>
+                                        <th name="th_notes" width="120" class="text-center">
+                                            <strong>Notes</strong>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                  <tfoot>
+                                      <tr height="200">
+                                      <th name="th_sm_empty"><strong> </strong></th>
+                                      </tr>
+                                                    <tr>
+                                                    <th name="th_sm_driver" width="200"><strong>Driver's Name</strong></th>
+                                                    <th name="th_sml_driver_phone" width="200"><strong>Car Plate Number</strong></th>
+                                                    <th name="th_sml_delivered_by" width="200"><strong>Delivered By</strong></th>
+                                                    <th name="th_sml_delivered_to" width="200"><strong>Delivered To</strong></th>
+                                                    <th name="th_sml_delivery_fee" width="200"><strong>Delivery Fee</strong></th>
+                                                    </tr>
+                                     </tfoot>
+                                <tbody>
+                                    <t t-foreach="o.move_ids_without_package.sorted(key=lambda m: m.product_id.id)" t-as="move">
+                                        <!-- In case you come accross duplicated lines, ask NIM or LAP -->
+                                        <t t-foreach="move.move_line_ids.sorted(key=lambda ml: ml.location_id.id)" t-as="ml">
+                                            <tr>
+                                                <td width="120">
+                                                    <span t-field="ml.trade_name2"/><br/>
+                                                </td>
+                                                <td>
+                                                    <span t-if="o.state != 'done'" t-field="ml.product_uom_qty"/>
+                                                    <span t-if="o.state == 'done'" t-field="ml.qty_done"/>
+                                                    <span t-field="ml.product_uom_id" groups="uom.group_uom"/>
+                                                </td>
+                                                      
+                                               <td class=" text-center h6" width="120">
+                                                    <span t-field="ml.lot_id"/><br/>
+
+                                                </td>
+                                                
+                                                <td class=" text-center h6" width="80">
+                                                    <t>
+                                                    <span t-field="ml.rolls_number2"/><br/>
+                                                    </t>
+                                                </td>
+
+                                                <td class=" text-center h6" width="120" t-if="has_barcode">
+                                                    <t t-if="product_barcode != move.product_id.barcode">
+                                                    <span t-field="ml.barcode2"/><br/>
+                                                    </t>
+                                                </td>
+
+                                                <td class=" text-center h6" width="120">
+                                                    <t>
+                                                    <span t-field="ml.notes2"/><br/>
+                                                    </t>
+                                                </td>
+
+                                            </tr>
+                                        </t>
+                                    </t>
+                                  </tbody>
+                            </table>
+                        </xpath>
+       </template>
+  </odoo>

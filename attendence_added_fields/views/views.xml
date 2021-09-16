@@ -1,0 +1,79 @@
+<odoo>
+  <data>
+<!--    added field to attendance tree -->
+      <record id="view_attendance_tree_added_fields" model="ir.ui.view">
+          <field name="name">view.attendance.tree.added.fields</field>
+              <field name="model">hr.attendance</field>
+              <field name="inherit_id" ref="hr_attendance.view_attendance_tree" />
+              <field name="arch" type="xml">
+                    <xpath expr="//field[@name='worked_hours']" position="after">
+                        <field name="late" widget="float_time"/>
+                        <field name="over_time" widget="float_time"/>
+                        <field name="early_sign_in" widget="float_time"/>
+                        <field name="early_leave" widget="float_time"/>
+<!--                        <field name="colored" invisible="1"/>-->
+                    </xpath>
+<!--                    Add color option to fields -->
+<!--                    <xpath expr="//field[@name='employee_id']" position="attributes">-->
+<!--                        <attribute name="options">{&quot;bg_color&quot;: &quot;yellow: colored == True &quot;}</attribute>-->
+<!--                    </xpath>-->
+<!--                    <xpath expr="//field[@name='check_in']" position="attributes">-->
+<!--                        <attribute name="options">{&quot;bg_color&quot;: &quot;yellow: colored == True &quot;}</attribute>-->
+<!--                    </xpath>-->
+<!--                    <xpath expr="//field[@name='check_out']" position="attributes">-->
+<!--                        <attribute name="options">{&quot;bg_color&quot;: &quot;yellow: colored == True &quot;}</attribute>-->
+<!--                    </xpath>-->
+<!--                    <xpath expr="//field[@name='worked_hours']" position="attributes">-->
+<!--                        <attribute name="options">{&quot;bg_color&quot;: &quot;yellow: colored == True &quot;}</attribute>-->
+<!--                    </xpath>-->
+              </field>
+      </record>
+      <!--    added field to attendance Form -->
+      <record id="hr_attendance_view_form_added_fields" model="ir.ui.view">
+          <field name="name">hr.attendance.view.form.added.fields</field>
+              <field name="model">hr.attendance</field>
+              <field name="inherit_id" ref="hr_attendance.hr_attendance_view_form" />
+              <field name="arch" type="xml">
+                    <xpath expr="//field[@name='check_out']" position="after">
+                        <field name="early_sign_in" widget="float_time" readonly="True"/>
+                        <field name="late" widget="float_time" readonly="True"/>
+                        <field name="early_leave" widget="float_time" readonly="True"/>
+                        <field name="over_time" widget="float_time" readonly="True"/>
+                    </xpath>
+                    <xpath expr="//sheet" position="before">
+                        <header>
+                            <button name="compute_check_in_early_late_all_big" string="compute Sign IN ALL" type="object" groups="hr.group_hr_manager"/>
+                            <button name="compute_check_out_early_late_all_big" string="compute Sign OUT ALL" type="object" groups="hr.group_hr_manager"/>
+                        </header>
+                    </xpath>
+              </field>
+    </record>
+
+    <!--              add what_shift field to employee view -->
+    <record id="add_whatshift_field_view_employee_form" model="ir.ui.view">
+          <field name="name">add.whatshift.field.view.employee.form</field>
+          <field name="model">hr.employee</field>
+          <field name="inherit_id" ref="hr.view_employee_form"/>
+          <field name="arch" type="xml">
+<!--                <xpath expr="//field[@name='tz']" position="after">-->
+<!--                    <field name="hour_from"/>-->
+<!--                    <field name="hour_to"/>-->
+<!--                </xpath>-->
+                <xpath expr="//page[@name='hr_settings']" position="after">
+                    <page string="Employee Shifts">
+                        <field name="shift_ids">
+                            <tree editable="bottom">
+                                <field name="name" required="True"/>
+                                <field name="date_from" required="True"/>
+                                <field name="date_to" required="True"/>
+                                <field name="hour_from" required="True"/>
+                                <field name="hour_to" required="True"/>
+                            </tree>
+                        </field>
+                    </page>
+                </xpath>
+          </field>
+    </record>
+
+  </data>
+</odoo>

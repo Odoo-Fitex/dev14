@@ -1,0 +1,12 @@
+
+Version : 13.0.0.1
+- Fix the issues of Partial Manufacturing Order
+
+Version : 13.0.0.2 - 28-02-2020
+- Improved code for Partial Manufacturing Order
+
+Version : 13.0.0.3
+- Added components one2many in wizard which also generates records based on tracking and quantity of products. Those values gets displayed in workorders generated from manufacturing order.
+
+
+13.0.0.7 :Fixed duplicate lines and qty addition issue 

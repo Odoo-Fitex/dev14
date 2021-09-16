@@ -7,10 +7,7 @@ from odoo import models, fields, api
 class StockPicking(models.Model):
     _inherit = 'stock.picking'
 
-
     mrp_production_id = fields.Many2one(comodel_name="mrp.production", string="", required=False, )
-
-
 
 
 

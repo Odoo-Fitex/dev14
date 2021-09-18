@@ -1,0 +1,28 @@
+<odoo>
+  <data>
+    <record id="view_hr_payslip_form" model="ir.ui.view">
+        <field name="name">view.hr.payslip.form</field>
+        <field name="model">hr.payslip</field>
+        <field name="inherit_id" ref="hr_payroll.view_hr_payslip_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook/page[@name='account_info']" position="after">
+                <page string="Actions">
+                  <group>
+                    <field name="overtime_1"/>
+                    <field name="overtime_2"/>
+                    <field name="bonus"/>
+                    <field name="incentive"/>
+                    <field name="adjustment_1"/>
+                    <field name="absence_with_per"/>
+                    <field name="absence_without_per"/>
+                    <field name="penality"/>
+                    <field name="latency1"/>
+                    <field name="adjustment_2"/>
+                    <field name="other"/>
+                  </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+  </data>
+</odoo>

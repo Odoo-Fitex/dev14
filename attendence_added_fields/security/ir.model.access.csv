@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_employee_shift_line_user,employee.shift.line.user,model_employee_shift_line,hr.group_hr_user,1,1,1,1

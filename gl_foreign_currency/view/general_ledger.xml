@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+
+		<template id="search_template_currency">
+			<a type="button" class="dropdown-toggle" data-toggle="dropdown">
+				<span class="fa fa-filter" />
+				Currency:
+				<t t-set="Currency_value" t-value="' '" />
+				<t t-foreach="options['currenciess']" t-as="c">
+					<t t-if="c.get('selected') == True">
+						<t t-set="Currency_value" t-value="''" />
+						<t t-esc="c.get('name')" />
+					</t>
+				</t>
+				<t t-esc="Currency_value" />
+				<span class="caret" />
+			</a>
+			<ul class="dropdown-menu o_filters_menu" >
+				<t t-foreach="options['currenciess']" t-as="c">
+					<li t-att-title="c.get('name')" data-filter="currenciess"
+						t-att-data-id="c.get('id')" class="account_currency_filter">
+						<a class="dropdown-item">
+							<t t-esc="c.get('name')" />
+						</a>
+					</li>
+				</t>
+			</ul>
+		</template>
+
+		<template id="search_template_analytic"
+			inherit_id="account_reports.search_template">
+			<xpath expr="." position="inside">
+				<div
+					class="btn-group o_dropdown o_account_reports_filter_multi_company"
+					t-if="options.get('currencys')">
+					<t t-call="gl_foreign_currency.search_template_currency" />
+				</div>
+			</xpath>
+
+		</template>
+
+	</data>
+</odoo>

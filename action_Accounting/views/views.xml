@@ -1,0 +1,333 @@
+<odoo>
+  <data>  
+ <record id="filter_general_ledger_today" model="ir.ui.view" >
+        <field name="name">filter.general.ledger.today</field>
+        <field name="model">account.move.line</field>
+        <field name="inherit_id" ref="account.view_account_move_line_filter"/>
+        <field name="arch" type="xml"> 
+                <xpath expr="//filter[@name='posted']" position="after">
+                  <separator/>
+                   <filter string="Today" name="today" domain="[('date', '=', 'today')]"/>
+                  <filter string="Before Today" name="before today" domain="[('date', '&lt;', 'today')]"/>
+                  <separator/>
+                  <separator/>
+                  <filter string="Treasury" name="treasury" domain="[('account_id', 'ilike', 'treasury')]"/>
+                  <separator/> 
+                  <separator/>
+                  <filter string="Treasury-EGP-" name="treasuryegp" domain="[('account_id', 'ilike', 'treasury'),('account_id', 'ilike', 'egp')]"/>
+                   <filter string="Treasury-USD-" name="treasuryusd" domain="[('account_id', 'ilike', 'treasury'),('account_id', 'ilike', 'usd')]"/>
+                  <filter string="Treasury-EUR-" name="treasuryeur" domain="[('account_id', 'ilike', 'treasury'),('account_id', 'ilike', 'eur')]"/>
+                  <separator/>                      
+                </xpath>
+
+        </field>
+    </record>
+    
+   <record id="action_treasury_egp" model="ir.actions.act_window">
+            <field name="name">Treasury-EGP-</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">account.move.line</field>
+            <field name="view_mode">tree,kanban</field>
+            <field name="search_view_id" ref="account.view_account_move_line_filter"/>
+            <field name="view_id" ref="account.view_move_line_tree_grouped_general"/>
+            <field name="context">{"search_default_posted": 1, "search_default_treasuryegp": 1, "search_default_beforetoday": 1,"group_by": 'account_id'}</field>
+        </record>
+    
+  <record id="action_treasury_usd" model="ir.actions.act_window">
+            <field name="name">Treasury-USD-</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">account.move.line</field>
+            <field name="view_mode">tree,kanban</field>
+            <field name="search_view_id" ref="account.view_account_move_line_filter"/>
+            <field name="view_id" ref="account.view_move_line_tree_grouped_general"/>
+            <field name="context">{"search_default_posted": 1, "search_default_treasuryusd": 1,  "search_default_beforetoday": 1, "group_by": 'account_id'}</field>
+        </record>
+
+<record id="action_treasury_eur" model="ir.actions.act_window">
+            <field name="name">Treasury-EUR-</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">account.move.line</field>
+            <field name="view_mode">tree,kanban</field>
+            <field name="search_view_id" ref="account.view_account_move_line_filter"/>
+            <field name="view_id" ref="account.view_move_line_tree_grouped_general"/>
+            <field name="context">{"search_default_posted": 1, "search_default_treasuryeur": 1, "search_default_beforetoday": 1,  "group_by": 'account_id'}</field>
+        </record>
+<record id="action_beforetoday_treasury_egp" model="ir.actions.act_window">
+            <field name="name">Today's Treasury-EGP-</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">account.move.line</field>
+            <field name="view_mode">tree,kanban</field>
+            <field name="search_view_id" ref="account.view_account_move_line_filter"/>
+            <field name="view_id" ref="account.view_move_line_tree_grouped_general"/>
+            <field name="context">{"search_default_posted": 1, "search_default_treasuryegp": 1, "search_default_before today": 1,"group_by": 'account_id'}</field>
+        </record>
+  <record id="action_beforetoday_treasury_usd" model="ir.actions.act_window">
+            <field name="name">Today's Treasury-USD-</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">account.move.line</field>
+            <field name="view_mode">tree,kanban</field>
+            <field name="search_view_id" ref="account.view_account_move_line_filter"/>
+            <field name="view_id" ref="account.view_move_line_tree_grouped_general"/>
+            <field name="context">{"search_default_posted": 1, "search_default_treasuryegp": 1, "search_default_before today": 1,"group_by": 'account_id'}</field>
+        </record>
+   <record id="action_beforetoday_treasury_eur" model="ir.actions.act_window">
+            <field name="name">Today's Treasury-EUR-</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">account.move.line</field>
+            <field name="view_mode">tree,kanban</field>
+            <field name="search_view_id" ref="account.view_account_move_line_filter"/>
+            <field name="view_id" ref="account.view_move_line_tree_grouped_general"/>
+            <field name="context">{"search_default_posted": 1, "search_default_treasuryegp": 1, "search_default_today": 1,"group_by": 'account_id'}</field>
+        </record>
+ <record id="action_today_treasury_egp" model="ir.actions.act_window">
+            <field name="name">Today's Treasury-EGP-</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">account.move.line</field>
+            <field name="view_mode">tree,kanban</field>
+            <field name="search_view_id" ref="account.view_account_move_line_filter"/>
+            <field name="view_id" ref="account.view_move_line_tree_grouped_general"/>
+            <field name="context">{"search_default_posted": 1, "search_default_treasuryegp": 1, "search_default_today": 1,"group_by": 'account_id'}</field>
+        </record>
+  <record id="action_today_treasury_usd" model="ir.actions.act_window">
+            <field name="name">Today's Treasury-USD-</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">account.move.line</field>
+            <field name="view_mode">tree,kanban</field>
+            <field name="search_view_id" ref="account.view_account_move_line_filter"/>
+            <field name="view_id" ref="account.view_move_line_tree_grouped_general"/>
+            <field name="context">{"search_default_posted": 1, "search_default_treasuryegp": 1, "search_default_today": 1,"group_by": 'account_id'}</field>
+        </record>
+   <record id="action_today_treasury_eur" model="ir.actions.act_window">
+            <field name="name">Today's Treasury-EUR-</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">account.move.line</field>
+            <field name="view_mode">tree,kanban</field>
+            <field name="search_view_id" ref="account.view_account_move_line_filter"/>
+            <field name="view_id" ref="account.view_move_line_tree_grouped_general"/>
+            <field name="context">{"search_default_posted": 1, "search_default_treasuryegp": 1, "search_default_today": 1,"group_by": 'account_id'}</field>
+        </record>
+    
+<record id="filter_chart_of_account_treasury" model="ir.ui.view" >
+        <field name="name">filter.chart.of.account.treasury</field>
+        <field name="model">account.account</field>
+        <field name="inherit_id" ref="account.view_account_search"/>
+        <field name="arch" type="xml">
+                <xpath expr="//filter[@name='used']" position="after">
+                  <separator/>
+                  <filter string="Treasury" name="treasury" domain="[('name', 'ilike', 'treasury')]"/>
+                  <separator/>
+                </xpath>
+        </field>
+    </record>
+    <record id="view_general_ledger_balance" model="ir.ui.view">
+        <field name="name">view.general.ledger.balance</field>
+        <field name="model">account.move.line</field>
+        <field name="inherit_id" ref="account.view_move_line_tree_grouped"/>
+        <field name="arch" type="xml">
+                <xpath expr="//field[@name='credit']" position="after">
+                     <field name="balance" sum="Total Balance"/>
+                </xpath>
+
+        </field>
+    </record>
+    
+    
+<record id="view_main_treasury_kanban" model="ir.ui.view">
+        <field name="name">general.ledger.treasury.kanban</field>
+        <field name="model">account.account</field>
+        <field name="mode">primary</field>
+        <field name="priority">20</field>
+        <field name="arch" type="xml">
+            <kanban>
+            <field name="name"/>
+            <field name="code"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                          <div class="oe_kanban_global_click">
+                             <div class="o_kanban_card_header">
+                             <div class="o_kanban_card_header_title">
+                                   <div class="o_primary">
+                                     <div style="text-align: center;"><strong>-Before Today-</strong></div>
+                                   </div>
+                                   <div class="o_primary">
+                                     <div attrs="{'invisible': [('code', '!=', '1201101')]}">
+                                    <a type="action" name="%(action_beforetoday_treasury_egp)d"><field name="name"/></a></div>
+                                    <div attrs="{'invisible': [('code', '!=', '1201102')]}">
+                                    <a type="action" name="%(action_beforetoday_treasury_usd)d"><field name="name"/></a></div>
+                                    <div attrs="{'invisible': [('code', '!=', '1201103')]}">
+                                    <a type="action" name="%(action_beforetoday_treasury_eur)d"><field name="name"/></a></div>
+                                </div>
+                                             <div class="o_secondary">
+                                               <div class="row">
+                                                <div class="col overflow-hidden text-left">
+                                                    <span title="Debit">Debit</span>
+                                                </div>
+                                                <div class="col-auto text-right">
+                                                   <field name="total_debit_beforetoday"/>
+                                                </div>
+                                            </div>
+                                            </div>
+
+                                            <div class="o_secondary">
+                                               <div class="row">
+                                                <div class="col overflow-hidden text-left">
+                                                    <span title="Credit">Credit</span>
+                                                </div>
+                                                <div class="col-auto text-right">
+                                                  <field name="total_credit_beforetoday"/>
+                                                </div>
+                                            </div>
+                                            </div>
+                                          <div class="o_secondary">
+                                               <div class="row">
+                                                <div class="col overflow-hidden text-left">
+                                                    <span title="Balance">Balance</span>
+                                                </div>
+                                                <div class="col-auto text-right">
+                                                    <field name="total_balance_beforetoday"/>
+                                                </div>
+                                               </div>
+                                          </div>
+                             </div>
+                             </div>
+                          </div>
+                                                 <t t-name="kanban-box">
+                          <div class="oe_kanban_global_click">
+                            <div class="o_kanban_card_header">
+                             <div class="o_kanban_card_header_title">
+                                   <div class="o_primary">
+                                     <div style="text-align: center;"><strong>Today<field name="today"/></strong></div>
+                                   </div>
+                                <div class="o_primary">
+                                     <div attrs="{'invisible': [('code', '!=', '1201101')]}">
+                                    <a type="action" name="%(action_today_treasury_egp)d"><field name="name"/></a></div>
+                                    <div attrs="{'invisible': [('code', '!=', '1201102')]}">
+                                    <a type="action" name="%(action_today_treasury_usd)d"><field name="name"/></a></div>
+                                    <div attrs="{'invisible': [('code', '!=', '1201103')]}">
+                                    <a type="action" name="%(action_today_treasury_eur)d"><field name="name"/></a></div>
+                                </div>
+                                        <div class="o_secondary">
+                                               <div class="row">
+                                                <div class="col overflow-hidden text-left">
+                                                    <span title="Debit">Today's Debit</span>
+                                                </div>
+                                                <div class="col-auto text-right">
+                                                   <field name="total_debit_today"/>
+                                                </div>
+                                            </div>
+                                            </div>
+
+                                            <div class="o_secondary">
+                                               <div class="row">
+                                                <div class="col overflow-hidden text-left">
+                                                    <span title="Credit">Today's Credit</span>
+                                                </div>
+                                                <div class="col-auto text-right">
+                                                  <field name="total_credit_today"/>
+                                                </div>
+                                            </div>
+                                            </div>
+                                          <div class="o_secondary">
+                                               <div class="row">
+                                                <div class="col overflow-hidden text-left">
+                                                    <span title="Balance">Today's Balance</span>
+                                                </div>
+                                                <div class="col-auto text-right">
+                                                    <field name="total_balance_today"/>
+                                                </div>
+                                               </div>
+                                          </div>
+                              </div>
+                            </div>
+                            </div>
+                            </t>
+                        <t t-name="kanban-box">
+                          <div class="oe_kanban_global_click">
+                             <div class="o_kanban_card_header">
+                             <div class="o_kanban_card_header_title">
+                               <div class="o_primary">
+                                     <div style="text-align: center;"><strong>-Total-</strong></div>
+                                   </div>
+                                   <div class="o_primary">
+                                     <div attrs="{'invisible': [('code', '!=', '1201101')]}">
+                                    <a type="action" name="842"><field name="name"/></a></div>
+                                    <div attrs="{'invisible': [('code', '!=', '1201102')]}">
+                                    <a type="action" name="843"><field name="name"/></a></div>
+                                    <div attrs="{'invisible': [('code', '!=', '1201103')]}">
+                                    <a type="action" name="844"><field name="name"/></a></div>
+                                </div>
+                                             <div class="o_secondary">
+                                               <div class="row">
+                                                <div class="col overflow-hidden text-left">
+                                                    <span title="Debit">Debit</span>
+                                                </div>
+                                                <div class="col-auto text-right">
+                                                   <field name="total_debit"/>
+                                                </div>
+                                            </div>
+                                            </div>
+
+                                            <div class="o_secondary">
+                                               <div class="row">
+                                                <div class="col overflow-hidden text-left">
+                                                    <span title="Credit">Credit</span>
+                                                </div>
+                                                <div class="col-auto text-right">
+                                                  <field name="total_credit"/>
+                                                </div>
+                                            </div>
+                                            </div>
+                                          <div class="o_secondary">
+                                               <div class="row">
+                                                <div class="col overflow-hidden text-left">
+                                                    <span title="Balance">Balance</span>
+                                                </div>
+                                                <div class="col-auto text-right">
+                                                    <field name="total_balance"/>
+                                                </div>
+                                               </div>
+                                          </div>
+                             </div>
+                             </div>
+                          </div>
+                        </t>
+                           </t> 
+
+                    </templates>
+                </kanban>
+       </field>
+    </record>
+    
+    
+   <record id="action_treasury_main" model="ir.actions.act_window">
+            <field name="name">Treasury</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">account.account</field>
+            <field name="view_mode">kanban</field>
+            <field name="search_view_id" ref="account.view_account_search"/>
+            <field name="view_id" ref="view_main_treasury_kanban"/>
+            <field name="context">{"search_default_treasury": 1,"group_by": 'currency_id'}</field>
+        </record>
+
+
+
+     <menuitem
+            name="Treasury"
+            id="menu_action_treasury_main"
+            action="action_treasury_main"
+            parent="account.menu_finance_entries_accounting_miscellaneous"
+            sequence="1"/>
+    
+     <record id="view_journal_entry_delete" model="ir.ui.view" >
+        <field name="name">view.journal.entry.delete</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form"/>
+        <field name="arch" type="xml"> 
+                <xpath expr="//field[@name='journal_id']" position="after">
+                  <field name="to_delete" groups="base.group_no_one"/>
+                 </xpath>
+
+        </field>
+    </record>
+   </data>
+</odoo>

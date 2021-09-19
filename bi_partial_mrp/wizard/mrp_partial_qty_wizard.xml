@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_mrp_product_produce_partial_wizard" model="ir.ui.view">
+        <field name="name">MRP Product Partial Produce</field>
+        <field name="model">partial.production.qty</field>
+        <field name="arch" type="xml">
+            <form string="Produce Partial Product">
+                <group>
+                    <field name="company_id" invisible="1"/>
+                    <field name="product_id" readonly="1"/>
+                    <label for="partial_qty" string="Quantity"/>
+                    <div class="o_row">
+                        <field name="partial_qty"/>
+                        <field name="product_uom_id" readonly="1" groups="uom.group_uom"/>
+                    </div>
+                    <label for="rolls" string="Number Of Rolls"/>
+                    <div class="o_row">
+                        <field name="rolls"/>
+                        </div>
+                    <field name="product_tracking" invisible="1"/>
+                    <label for="finished_lot_id" attrs="{'invisible': [('product_tracking', '=', 'none')]}"/>
+                    <div class="o_row">
+                        <field name="finished_lot_id" attrs="{'invisible': [('product_tracking', '=', 'none')], 'required': [('product_tracking', '!=', 'none')]}" context="{'default_product_id': product_id, 'default_company_id': company_id}"/>
+                    </div>
+                     
+                </group>
+                <field name="component_vals_ids">
+                    <tree editable="bottom" create="0">
+                        <field name="component_line_id" invisible='1'/>
+                        <field name="product_id"/>
+                        <field name="lot_id"/>
+                        <field name="product_uom_qty"/>
+                        <field name="reserved_availability"/>
+                        <field name="quantity_done"/>
+                        <field name="product_uom_id"/>
+                    </tree>       
+                </field>     
+                <footer>
+                    <button name="do_partial_produce" type="object" string="Record Partial Production" class="btn-primary"/>
+                    <button string="Cancel" class="btn-default" special="cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="act_mrp_partial_product_produce" model="ir.actions.act_window">
+        <field name="name">Partially Produce Quantity</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">partial.production.qty</field>
+        <field name="view_mode">form</field>
+        <field name="context">{}</field>
+        <field name="target">new</field>
+    </record>
+
+    <record id="view_mrp_form_button_partial" model="ir.ui.view">
+        <field name="name">mrp.partial.qty.button.form1</field>
+        <field name="model">mrp.production</field>
+        <field name="inherit_id" ref="mrp.mrp_production_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='button_plan']" position="after">
+                <button name="%(act_mrp_partial_product_produce)d" attrs="{'invisible': [('state', 'not in',('confirmed','planned','progress'))]}" string="Produce Partial Quantity" type="action" class="oe_highlight"/>
+            </xpath>
+      </field>
+    </record>
+</odoo>
+
